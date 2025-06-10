@@ -15,14 +15,13 @@ public class Biblioteca {
     private final String PATH_TXT = "pdf-manager/src/main/java/br/com/pdfmanager/resources/path.txt";
 
     /**
-     * Construtor da classe Biblioteca.
-     * Cria a estrutura de diretórios caso não exista e salva o path em um
-     * arquivo .txt
-     *
-     * @param path Local onde a biblioteca será criada ou acessada.
+     * Além de criar entradas para a biblioteca, o sistema deve conseguir efetuar
+     * as seguintes tarefas: deletar entradas na biblioteca, editar entradas da
+     * biblioteca, buscar e listar entradas na biblioteca, criar novas bibliotecas,
+     * alternar entre bibliotecas, deletar bibliotecas.
      */
     public Biblioteca(String path) {
-        documentos = new ArrayList<>();
+        documentos = new ArrayList<Documento>();
         diretorio = new File(path);
 
         if (!diretorio.exists()) {
@@ -35,6 +34,7 @@ public class Biblioteca {
     }
 
     private boolean criarDiretorio() {
+        System.out.println("Criando diretório...");
         if (diretorio.mkdirs()) {
             System.out.println("Diretório criado em " + diretorio.getAbsolutePath());
             return true;
@@ -53,6 +53,8 @@ public class Biblioteca {
     }
 
     private void recuperarCaminho() {
+        System.out.println("Recuperando caminho...");
+
         File arquivo = new File(PATH_TXT);
 
         try (Scanner scanner = new Scanner(arquivo)) {
@@ -66,7 +68,37 @@ public class Biblioteca {
         }
     }
 
+    /**
+     * Adiciona um documento na biblioteca e salva o caminho dele no arquivo
+     * path.txt
+     * 
+     * @param documento Um objeto do tipo Documento
+     */
     public void adicionarDocumento(Documento documento) {
         documentos.add(documento);
+        System.out.println("Documento adicionado");
+        // falta salvar o caminho no path.txt
+    }
+
+    public void removerDocumento(Documento documento) {
+        // TODO Implementar removerDocumento()
+    }
+
+    public void editarEntrada() {
+        // TODO Implementar editarEntrada()
+    }
+
+    public void buscarDocumento() {
+        // TODO Implementar buscarDocumento()
+    }
+
+    public void listarDocumentos() {
+        if (documentos.isEmpty()) {
+            System.out.println("Nenhum documento na biblioteca.");
+        } else {
+            for (int i = 0; i < documentos.size(); i++) {
+                System.out.println((i + 1) + ": " + documentos.get(i).titulo + "| " + documentos.get(i).autores);
+            }
+        }
     }
 }
