@@ -9,12 +9,12 @@ import java.util.List;
 public abstract class Documento {
     protected List<String> autores;
     protected String titulo;
-    protected String caminho;
+    protected String path;
 
-    public Documento(List<String> autores, String titulo, String caminho) {
+    public Documento(List<String> autores, String titulo, String path) {
         this.autores = autores;
         this.titulo = titulo;
-        this.caminho = caminho;
+        this.path = path;
     }
 
     public List<String> getAutores() {
@@ -26,7 +26,7 @@ public abstract class Documento {
     }
 
     public String getCaminho() {
-        return caminho;
+        return path;
     }
 
     public void setAutores(List<String> autores) {
@@ -35,9 +35,5 @@ public abstract class Documento {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public void setCaminho(String caminho) {
-        this.caminho = caminho;
     }
 }

@@ -17,7 +17,7 @@ public class Biblioteca {
     /**
      * Construtor da classe Biblioteca.
      * Cria a estrutura de diretórios caso não exista e salva o path em um
-     * arquivo .txt.
+     * arquivo .txt
      *
      * @param path Local onde a biblioteca será criada ou acessada.
      */
