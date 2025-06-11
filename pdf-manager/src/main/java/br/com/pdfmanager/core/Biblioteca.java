@@ -1,8 +1,7 @@
 package br.com.pdfmanager.core;
 
-import br.com.pdfmanager.core.Documento;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,9 +15,10 @@ public class Biblioteca {
 
     /**
      * Além de criar entradas para a biblioteca, o sistema deve conseguir efetuar
-     * as seguintes tarefas: deletar entradas na biblioteca, editar entradas da
-     * biblioteca, buscar e listar entradas na biblioteca, criar novas bibliotecas,
-     * alternar entre bibliotecas, deletar bibliotecas.
+     * as seguintes tarefas: 
+     * deletar entradas na biblioteca 
+     * editar entradas da biblioteca 
+     * buscar e listar entradas na biblioteca
      */
     public Biblioteca(String path) {
         documentos = new ArrayList<Documento>();
@@ -35,6 +35,7 @@ public class Biblioteca {
 
     private boolean criarDiretorio() {
         System.out.println("Criando diretório...");
+        
         if (diretorio.mkdirs()) {
             System.out.println("Diretório criado em " + diretorio.getAbsolutePath());
             return true;
@@ -45,7 +46,7 @@ public class Biblioteca {
     }
 
     private void salvarCaminho() {
-        try (FileWriter writer = new FileWriter(PATH_TXT)) {
+        try (FileWriter writer = new FileWriter(this.PATH_TXT)) {
             writer.write(diretorio.getAbsolutePath());
         } catch (IOException e) {
             System.err.println("Não foi possível salvar o path da biblioteca: " + e.getMessage());
@@ -55,17 +56,19 @@ public class Biblioteca {
     private void recuperarCaminho() {
         System.out.println("Recuperando caminho...");
 
-        File arquivo = new File(PATH_TXT);
+        File arquivo = new File(this.PATH_TXT);
 
         try (Scanner scanner = new Scanner(arquivo)) {
             String linha = scanner.nextLine();
             diretorio = new File(linha);
             System.out.println("Caminho recuperado da biblioteca: " + linha);
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o arquivo path.txt: " + e.getMessage());
+        } catch (FileNotFoundException e) {
+            System.err.println("Arquivo path não encontrado. Criando path...");
+            salvarCaminho();
+            System.out.println("Novo arquivo path criado");
         } catch (NoSuchElementException e) {
-            System.err.println("Arquivo path.txt está vazio.");
-        }
+            System.err.println("Arquivo path.txt está vazio");
+        } 
     }
 
     /**
@@ -89,7 +92,7 @@ public class Biblioteca {
     }
 
     public void buscarDocumento() {
-        // TODO Implementar buscarDocumento()
+       // TODO Implementar buscarDocumento() 
     }
 
     public void listarDocumentos() {
