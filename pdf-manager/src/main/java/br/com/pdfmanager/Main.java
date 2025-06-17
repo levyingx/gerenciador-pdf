@@ -18,8 +18,6 @@ public class Main {
                 "Desc trabalho unidade 1 funciona pfv",
                 "LP2",
                 "DIMAP",
-                "C:/Users/Givaldo/Documents/Coding/Java/gerenciador-pdf/Trabalho01.pdf");
-        // biblioteca.adicionarDocumento(exercicio);
-        // biblioteca.listarDocumentos();
+                "Trabalho01.pdf");
     }
 }

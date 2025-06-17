@@ -5,5 +5,5 @@ package br.com.pdfmanager.core;
  */
 public class GerenciadorPDF {
     // aqui a ideia é ser uma classe q engloba as bibliotecas pra gerenciar as bibliotecas de fato.
-    // tambem implementar a interface de cli aqui eu acho
+    // tambem implementar a interface de cli aqui e deletar os prints da biblioteca q foram so pra debug
 }
