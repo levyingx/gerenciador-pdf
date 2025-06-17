@@ -179,7 +179,8 @@ public class Biblioteca {
     /**
      * Remove um documento da biblioteca.
      * 
-     * @implNote O documento é removido do ArrayList, o .bin é sobrescrito sem o
+     * @implNote O documento é removido do ArrayList,
+     *           o .bin é sobrescrito sem o
      *           documento e o PDF é deletado do diretório.
      * @param documento documento a ser removido.
      */
@@ -201,7 +202,6 @@ public class Biblioteca {
             if (pdf.delete()) {
                 System.out.println("PDF deletado: " + pdf.getAbsolutePath());
 
-                // Se o subdiretório ficou vazio, deleta também
                 if (subdiretorio.isDirectory() && subdiretorio.list().length == 0) {
                     subdiretorio.delete();
                     System.out.println("Subdiretório vazio deletado: " + subdiretorio.getAbsolutePath());
@@ -214,12 +214,40 @@ public class Biblioteca {
         }
     }
 
-    public void editarEntrada(int indice, Documento novoDocumento) {
-        // TODO editarEntrada()
+    /**
+     * Edita um documento na biblioteca.
+     * 
+     * @implNote O documento é editado no ArrayList,
+     *           o .bin é sobrescrito com o novo documento.
+     */
+    public void editarDocumento(int indice, Documento novoDocumento) {
+        // TODO editarDocumento()
+        if (indice < 0 || indice >= documentos.size()) {
+            System.out.println("Índice inválido.");
+        } else {
+            documentos.set(indice, novoDocumento);
+            salvarDocumentos();
+        }
     }
 
+    /**
+     * Busca documentos na biblioteca pelo título.
+     * 
+     * @param nome título do documento a ser buscado.
+     */
     public void buscarDocumento(String nome) {
-        // TODO buscarDocumento()
+        carregarDocumentos();
+
+        for (Documento doc : documentos) {
+            if (doc.getTitulo().equalsIgnoreCase(nome)) {
+                System.out.println("Documento encontrado:");
+                System.out.println("Título: " + doc.getTitulo());
+                System.out.println("Autores: " + String.join(", ", doc.getAutores()));
+                System.out.println("Caminho: " + doc.getCaminho());
+            }
+        }
+
+        System.out.println("Documento não encontrado: \"" + nome + "\"");
     }
 
     /**
