@@ -87,7 +87,6 @@ public class Biblioteca {
             if (scanner.hasNextLine()) {
                 String caminho = scanner.nextLine();
                 diretorio = new File(caminho);
-                System.out.println("Caminho recuperado com sucesso: " + caminho);
             }
         } catch (FileNotFoundException e) {
             System.err.println("Não foi possível recuperar caminho: " + e.getMessage());
@@ -112,7 +111,6 @@ public class Biblioteca {
         if (arquivo.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arquivo))) {
                 documentos = (ArrayList<Documento>) ois.readObject();
-                System.out.println("Documentos carregados com sucesso.");
             } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Erro ao carregar documentos: " + e.getMessage());
             }
@@ -137,7 +135,7 @@ public class Biblioteca {
         carregarDocumentos();
 
         if (documento == null || documentos.contains(documento)) {
-            System.out.println("Documento já existe ou é nulo. Não adicionado.");
+            System.out.println("Documento já existe ou é nulo.");
         } else {
             // Copia o arquivo para o diretório da biblioteca
             File pdf = new File(documento.getCaminho());
@@ -152,18 +150,15 @@ public class Biblioteca {
             try {
                 if (pdf.exists()) {
                     Files.copy(pdf.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("Arquivo copiado com sucesso para: " + destino.getAbsolutePath());
                 } else {
                     System.err.println("Arquivo PDF não encontrado: " + pdf.getAbsolutePath());
                 }
             } catch (IOException e) {
                 System.err.println("Erro ao copiar arquivo: " + e.getMessage());
             }
-            
+
             documentos.add(documento);
-            // Atualiza o .bin
             salvarDocumentos();
-            System.out.println("Documento adicionado: " + documento.getTitulo());
         }
     }
 
@@ -181,8 +176,42 @@ public class Biblioteca {
         }
     }
 
+    /**
+     * Remove um documento da biblioteca.
+     * 
+     * @implNote O documento é removido do ArrayList, o .bin é sobrescrito sem o
+     *           documento e o PDF é deletado do diretório.
+     * @param documento documento a ser removido.
+     */
     public void removerDocumento(Documento documento) {
-        // TODO removerDocumento()
+        carregarDocumentos();
+
+        if (documento == null || !documentos.contains(documento)) {
+            System.out.println("Documento não encontrado ou é nulo.");
+            return;
+        }
+
+        documentos.remove(documento);
+        salvarDocumentos();
+
+        File subdiretorio = new File(diretorio, documento.getAutores().get(0));
+        File pdf = new File(subdiretorio, documento.getTitulo() + ".pdf");
+
+        if (pdf.exists()) {
+            if (pdf.delete()) {
+                System.out.println("PDF deletado: " + pdf.getAbsolutePath());
+
+                // Se o subdiretório ficou vazio, deleta também
+                if (subdiretorio.isDirectory() && subdiretorio.list().length == 0) {
+                    subdiretorio.delete();
+                    System.out.println("Subdiretório vazio deletado: " + subdiretorio.getAbsolutePath());
+                }
+            } else {
+                System.err.println("Falha ao deletar PDF: " + pdf.getAbsolutePath());
+            }
+        } else {
+            System.out.println("Arquivo PDF não encontrado para deletar.");
+        }
     }
 
     public void editarEntrada(int indice, Documento novoDocumento) {

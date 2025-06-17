@@ -15,11 +15,11 @@ public class Main {
         autores.add("Valdigleis");
         Documento exercicio = new Exercicio(
                 autores,
-                "Outra Desc trabalho unidade 1 funciona pfv",
+                "Desc trabalho unidade 1 funciona pfv",
                 "LP2",
                 "DIMAP",
                 "C:/Users/Givaldo/Documents/Coding/Java/gerenciador-pdf/Trabalho01.pdf");
-        biblioteca.adicionarDocumento(exercicio);
-        biblioteca.listarDocumentos();
+        // biblioteca.adicionarDocumento(exercicio);
+        // biblioteca.listarDocumentos();
     }
 }
