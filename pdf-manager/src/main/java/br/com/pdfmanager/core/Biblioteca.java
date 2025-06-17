@@ -1,28 +1,22 @@
 package br.com.pdfmanager.core;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
+
+import br.com.pdfmanager.model.Documento;
+import br.com.pdfmanager.model.Exercicio;
 
 public class Biblioteca {
+    private String nome;
     private File diretorio;
     private ArrayList<Documento> documentos;
-    private final String PATH_TXT = "pdf-manager/src/main/java/br/com/pdfmanager/resources/path.txt";
+    private final String STORAGE_PATH = "pdf-manager/src/main/java/br/com/pdfmanager/resources/data.json";
 
-    /**
-     * Além de criar entradas para a biblioteca, o sistema deve conseguir efetuar
-     * as seguintes tarefas: 
-     * deletar entradas na biblioteca 
-     * editar entradas da biblioteca 
-     * buscar e listar entradas na biblioteca
-     */
-    public Biblioteca(String path) {
-        documentos = new ArrayList<Documento>();
-        diretorio = new File(path);
+    public Biblioteca(String nome, String path) {
+        this.nome = nome;
+        this.documentos = new ArrayList<Documento>();
+        this.diretorio = new File(path);
 
         if (!diretorio.exists()) {
             if (criarDiretorio()) {
@@ -30,12 +24,14 @@ public class Biblioteca {
             }
         } else {
             recuperarCaminho();
+            carregarDocumentos();
         }
+
     }
 
     private boolean criarDiretorio() {
         System.out.println("Criando diretório...");
-        
+
         if (diretorio.mkdirs()) {
             System.out.println("Diretório criado em " + diretorio.getAbsolutePath());
             return true;
@@ -46,53 +42,45 @@ public class Biblioteca {
     }
 
     private void salvarCaminho() {
-        try (FileWriter writer = new FileWriter(this.PATH_TXT)) {
-            writer.write(diretorio.getAbsolutePath());
-        } catch (IOException e) {
-            System.err.println("Não foi possível salvar o path da biblioteca: " + e.getMessage());
-        }
+        // TODO salvarCaminho()
     }
 
     private void recuperarCaminho() {
-        System.out.println("Recuperando caminho...");
-
-        File arquivo = new File(this.PATH_TXT);
-
-        try (Scanner scanner = new Scanner(arquivo)) {
-            String linha = scanner.nextLine();
-            diretorio = new File(linha);
-            System.out.println("Caminho recuperado da biblioteca: " + linha);
-        } catch (FileNotFoundException e) {
-            System.err.println("Arquivo path não encontrado. Criando path...");
-            salvarCaminho();
-            System.out.println("Novo arquivo path criado");
-        } catch (NoSuchElementException e) {
-            System.err.println("Arquivo path.txt está vazio");
-        } 
+        // TODO recuperarCaminho()
     }
 
-    /**
-     * Adiciona um documento na biblioteca e salva o caminho dele no arquivo
-     * path.txt
-     * 
-     * @param documento Um objeto do tipo Documento
-     */
+    private void carregarDocumentos() {
+        // TODO carregarDocumentos()
+    }
+
     public void adicionarDocumento(Documento documento) {
-        documentos.add(documento);
-        System.out.println("Documento adicionado");
-        // falta salvar o caminho no path.txt
+        if (documento != null) {
+            documentos.add(documento);
+        }
+
+        // TODO adicionarDocumento()
     }
 
     public void removerDocumento(Documento documento) {
-        // TODO Implementar removerDocumento()
+        if (documentos.remove(documento)) {
+            System.out.println("Documento removido com sucesso.");
+            adicionarDocumento(null); 
+        } else {
+            System.out.println("Documento não encontrado na biblioteca.");
+        }
     }
 
-    public void editarEntrada() {
-        // TODO Implementar editarEntrada()
+    public void editarEntrada(int indice, Documento novoDocumento) {
+        if (indice >= 0 && indice < documentos.size()) {
+            documentos.set(indice, novoDocumento);
+            System.out.println("Documento atualizado com sucesso.");
+        } else {
+            System.out.println("Índice inválido."); // // TODO throw error Índice inválido. Tente novamente and allow user to try another index
+        }
     }
 
-    public void buscarDocumento() {
-       // TODO Implementar buscarDocumento() 
+    public void buscarDocumento(String nome) {
+        // TODO buscarDocumento()
     }
 
     public void listarDocumentos() {
