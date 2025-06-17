@@ -221,7 +221,6 @@ public class Biblioteca {
      *           o .bin é sobrescrito com o novo documento.
      */
     public void editarDocumento(int indice, Documento novoDocumento) {
-        // TODO editarDocumento()
         if (indice < 0 || indice >= documentos.size()) {
             System.out.println("Índice inválido.");
         } else {

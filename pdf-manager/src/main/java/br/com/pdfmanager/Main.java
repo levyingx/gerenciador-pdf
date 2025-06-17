@@ -19,5 +19,7 @@ public class Main {
                 "LP2",
                 "DIMAP",
                 "Trabalho01.pdf");
+        biblioteca.adicionarDocumento(exercicio);
+        biblioteca.listarDocumentos();
     }
 }
