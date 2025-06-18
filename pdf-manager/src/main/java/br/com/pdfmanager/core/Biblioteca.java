@@ -263,4 +263,16 @@ public class Biblioteca {
             i++;
         }
     }
+
+    public File getDiretorio() {
+        return diretorio;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public ArrayList<Documento> getDocumentos() {
+        return documentos;
+    }
 }
